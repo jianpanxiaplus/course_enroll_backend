@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.courseenroll.mapper.EnrollmentMapper">
+    <insert id="insert" parameterType="com.example.courseenroll.entity.Enrollment">
+        INSERT INTO enrollment (student_id, course_id) VALUES (#{studentId}, #{courseId})
+    </insert>
+
+    <delete id="deleteByStudentAndCourse">
+        DELETE FROM enrollment WHERE student_id = #{studentId} AND course_id = #{courseId}
+    </delete>
+
+    <select id="findByStudentId" resultType="com.example.courseenroll.entity.Enrollment">
+        SELECT * FROM enrollment WHERE student_id = #{studentId}
+    </select>
+
+    <select id="exists" resultType="boolean">
+        SELECT EXISTS(SELECT 1 FROM enrollment WHERE student_id = #{studentId} AND course_id = #{courseId})
+    </select>
+</mapper>

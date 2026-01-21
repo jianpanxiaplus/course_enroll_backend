@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.courseenroll.mapper.CourseMapper">
+    <select id="findAll" resultType="com.example.courseenroll.entity.Course">
+        SELECT * FROM course
+    </select>
+
+    <select id="findById" resultType="com.example.courseenroll.entity.Course" parameterType="long">
+        SELECT * FROM course WHERE id = #{id}
+    </select>
+
+    <select id="countEnrollments" resultType="int" parameterType="long">
+        SELECT COUNT(*) FROM enrollment WHERE course_id = #{courseId}
+    </select>
+
+    <select id="findEnrolledByStudentId" resultType="com.example.courseenroll.entity.Course">
+        SELECT c.* FROM course c
+                            JOIN enrollment e ON c.id = e.course_id
+        WHERE e.student_id = #{studentId}
+    </select>
+</mapper>
