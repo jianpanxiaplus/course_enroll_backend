@@ -13,15 +13,16 @@
         <result column="publisher_job_number" property="publisherJobNumber"/>
         <result column="publisher_grade" property="publisherGrade"/>
         <result column="publisher_class" property="publisherClass"/>
+        <result column="del_flag" property="delFlag"/>
         <result column="create_time" property="createTime"/>
     </resultMap>
 
     <select id="findAll" resultMap="BaseResultMap">
-        SELECT * FROM course ORDER BY create_time DESC
+        SELECT * FROM course where del_flag = 0 ORDER BY create_time DESC
     </select>
 
     <select id="findById" resultMap="BaseResultMap" parameterType="long">
-        SELECT * FROM course WHERE id = #{id}
+        SELECT * FROM course WHERE id = #{id} and del_flag = 0
     </select>
 
     <select id="countEnrollments" resultType="int" parameterType="long">
@@ -57,7 +58,7 @@
     </update>
 
     <delete id="deleteById" parameterType="long">
-        DELETE FROM course WHERE id = #{id}
+        UPDATE course SET del_flag = 1 WHERE id = #{id}
     </delete>
 
 </mapper>
