@@ -10,5 +10,8 @@ public interface CourseMapper {
     Course findById(Long id);
     int countEnrollments(Long courseId);
     List<Course> findEnrolledByStudentId(Long studentId);
+    void insert(Course course);
+    void update(Course course);
+    void deleteById(Long id);
 }
 

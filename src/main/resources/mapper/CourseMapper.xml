@@ -2,11 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.courseenroll.mapper.CourseMapper">
-    <select id="findAll" resultType="com.example.courseenroll.entity.Course">
-        SELECT * FROM course
+
+    <resultMap id="BaseResultMap" type="com.example.courseenroll.entity.Course">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="max_capacity" property="maxCapacity"/>
+        <result column="publisher_name" property="publisherName"/>
+        <result column="publisher_phone" property="publisherPhone"/>
+        <result column="publisher_job_number" property="publisherJobNumber"/>
+        <result column="publisher_grade" property="publisherGrade"/>
+        <result column="publisher_class" property="publisherClass"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT * FROM course ORDER BY create_time DESC
     </select>
 
-    <select id="findById" resultType="com.example.courseenroll.entity.Course" parameterType="long">
+    <select id="findById" resultMap="BaseResultMap" parameterType="long">
         SELECT * FROM course WHERE id = #{id}
     </select>
 
@@ -19,4 +33,31 @@
                             JOIN enrollment e ON c.id = e.course_id
         WHERE e.student_id = #{studentId}
     </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.example.courseenroll.entity.Course">
+        INSERT INTO course (name, description, max_capacity,
+                            publisher_name, publisher_phone, publisher_job_number,
+                            publisher_grade, publisher_class)
+        VALUES (#{name}, #{description}, #{maxCapacity},
+                #{publisherName}, #{publisherPhone}, #{publisherJobNumber},
+                #{publisherGrade}, #{publisherClass})
+    </insert>
+
+    <update id="update" parameterType="com.example.courseenroll.entity.Course">
+        UPDATE course SET
+                          name = #{name},
+                          description = #{description},
+                          max_capacity = #{maxCapacity},
+                          publisher_name = #{publisherName},
+                          publisher_phone = #{publisherPhone},
+                          publisher_job_number = #{publisherJobNumber},
+                          publisher_grade = #{publisherGrade},
+                          publisher_class = #{publisherClass}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="long">
+        DELETE FROM course WHERE id = #{id}
+    </delete>
+
 </mapper>

@@ -14,7 +14,7 @@ public class Result<T> {
 
     public Result(T data) {
         this.code = 200;
-        this.message = "success";
+        this.message = "操作成功！";
         this.data = data;
     }
     public Result(T data, boolean success, String message) {

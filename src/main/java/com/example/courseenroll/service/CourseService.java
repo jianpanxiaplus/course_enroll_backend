@@ -22,4 +22,20 @@ public class CourseService {
     public List<Course> getEnrolledCoursesByStudent(Long studentId) {
         return courseMapper.findEnrolledByStudentId(studentId);
     }
+
+    public Course getById(Long id) {
+        return courseMapper.findById(id);
+    }
+
+    public void create(Course course) {
+        courseMapper.insert(course);
+    }
+
+    public void update(Course course) {
+        courseMapper.update(course);
+    }
+
+    public void delete(Long id) {
+        courseMapper.deleteById(id);
+    }
 }
