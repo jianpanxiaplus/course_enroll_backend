@@ -16,8 +16,8 @@ public class Course implements Serializable {
     private String publisherName;
     private String publisherPhone;
     private String publisherJobNumber;
-    private String publisherGrade;
-    private String publisherClass;
+    private Integer publisherGrade;
+    private Integer publisherClass;
     private Integer delFlag;
     private LocalDateTime createTime;
     private transient boolean enrolled;
