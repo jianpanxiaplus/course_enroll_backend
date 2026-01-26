@@ -1,38 +1,42 @@
 package com.example.courseenroll.controller;
 
-import com.example.courseenroll.service.EnrollmentService;
+import com.example.courseenroll.common.Result;
+import com.example.courseenroll.dto.EnrollmentDetailDTO;
+import com.example.courseenroll.req.EnrollmentReq;
+import com.example.courseenroll.service.IEnrollmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/enroll")
 public class EnrollmentController {
 
     @Autowired
-    private EnrollmentService enrollmentService;
+    private IEnrollmentService enrollmentService;
 
 
     @PostMapping("/enroll")
-    public Map<String, Object> enroll(@RequestParam Long studentId, @RequestParam Long courseId) {
-        String msg = enrollmentService.enroll(studentId, courseId);
-        boolean success = msg.equals("报名成功");
-        Map<String, Object> map = new HashMap<>();
-        map.put("success", success);
-        map.put("message", msg);
-        return map;
+    public Result enroll(@RequestBody EnrollmentReq req) {
+        return enrollmentService.enroll(req.getStudentId(), req.getCourseId());
     }
 
     @DeleteMapping("/cancelEnroll")
-    public Map<String, Object> cancelEnroll(@RequestParam Long studentId, @RequestParam Long courseId) {
-        String msg = enrollmentService.cancelEnroll(studentId, courseId);
-        boolean success = msg.equals("取消成功");
-        Map<String, Object> map = new HashMap<>();
-        map.put("success", success);
-        map.put("message", msg);
-        return map;
+    public Result cancelEnroll(@RequestParam Long studentId, @RequestParam Long courseId) {
+        return enrollmentService.cancelEnroll(studentId, courseId);
+    }
+
+    @GetMapping("/myEnrollments")
+    public Result<List<EnrollmentDetailDTO>> getMyEnrollments(@RequestParam("studentId") Long studentId) {
+        List<EnrollmentDetailDTO> list = enrollmentService.getEnrollmentsByStudent(studentId);
+        return Result.success(list);
+    }
+
+    @DeleteMapping("/{enrollmentId}")
+    public Result cancelEnrollment(@PathVariable Long enrollmentId) {
+        enrollmentService.deleteEnrollment(enrollmentId);
+        return Result.success("取消成功");
     }
 
 }

@@ -2,10 +2,13 @@ package com.example.courseenroll.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-public class Course {
+public class Course implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Long id;
     private String name;
     private String description;
@@ -17,4 +20,5 @@ public class Course {
     private String publisherClass;
     private Integer delFlag;
     private LocalDateTime createTime;
+    private transient boolean enrolled;
 }

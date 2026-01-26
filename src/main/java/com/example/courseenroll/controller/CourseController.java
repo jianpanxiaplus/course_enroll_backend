@@ -2,7 +2,7 @@ package com.example.courseenroll.controller;
 
 import com.example.courseenroll.common.Result;
 import com.example.courseenroll.entity.Course;
-import com.example.courseenroll.service.CourseService;
+import com.example.courseenroll.service.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ import java.util.List;
 public class CourseController {
 
     @Autowired
-    private CourseService courseService;
+    private ICourseService courseService;
 
     @GetMapping("/list")
     public Result listCourses() {

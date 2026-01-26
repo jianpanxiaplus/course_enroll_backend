@@ -12,5 +12,7 @@ mybatis:
   type-aliases-package: com.example.courseenroll.entity
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    mapUnderscoreToCamelCase: true
+
 
 

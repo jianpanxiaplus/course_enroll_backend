@@ -9,6 +9,9 @@
     <delete id="deleteByStudentAndCourse">
         DELETE FROM enrollment WHERE student_id = #{studentId} AND course_id = #{courseId}
     </delete>
+    <delete id="deleteEnrollment">
+        DELETE FROM enrollment WHERE id = #{enrollmentId}
+    </delete>
 
     <select id="findByStudentId" resultType="com.example.courseenroll.entity.Enrollment">
         SELECT * FROM enrollment WHERE student_id = #{studentId}
@@ -16,5 +19,21 @@
 
     <select id="exists" resultType="boolean">
         SELECT EXISTS(SELECT 1 FROM enrollment WHERE student_id = #{studentId} AND course_id = #{courseId})
+    </select>
+
+    <select id="selectEnrollmentsByStudent" resultType="com.example.courseenroll.dto.EnrollmentDetailDTO">
+        SELECT
+            e.id AS enrollmentId,
+            c.id AS courseId,
+            c.name AS courseName,
+            c.publisher_grade,
+            c.publisher_class,
+            c.publisher_name,
+            c.description,
+            e.enroll_time
+        FROM enrollment e
+                 JOIN course c ON e.course_id = c.id
+        WHERE e.student_id = #{studentId}
+        ORDER BY e.enroll_time DESC
     </select>
 </mapper>
