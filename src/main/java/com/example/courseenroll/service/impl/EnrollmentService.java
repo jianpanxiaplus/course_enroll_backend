@@ -30,10 +30,16 @@ public class EnrollmentService implements IEnrollmentService {
         }
 
         Course course = courseMapper.findById(courseId);
-        int currentCount = courseMapper.countEnrollments(courseId);
-        if (currentCount >= course.getMaxCapacity()) {
+        if (course.getRemainingCapacity() <= 0){
             return Result.fail("课程人数已满");
         }
+//        int currentCount = courseMapper.countEnrollments(courseId);
+//        if (currentCount >= course.getMaxCapacity()) {
+//            return Result.fail("课程人数已满");
+//        }
+        course.setRemainingCapacity(course.getRemainingCapacity() - 1);
+        course.setRegisteredCapacity(course.getRegisteredCapacity() + 1);
+        courseMapper.update(course);
 
         Enrollment enrollment = new Enrollment();
         enrollment.setStudentId(studentId);
@@ -49,6 +55,10 @@ public class EnrollmentService implements IEnrollmentService {
             return Result.fail("未报名该课程");
         }
         enrollmentMapper.deleteByStudentAndCourse(studentId, courseId);
+        Course course = courseMapper.findById(courseId);
+        course.setRemainingCapacity(course.getRemainingCapacity() + 1);
+        course.setRegisteredCapacity(course.getRegisteredCapacity() - 1);
+        courseMapper.update(course);
         return Result.success("取消成功!");
     }
 

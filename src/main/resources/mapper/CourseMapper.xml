@@ -8,11 +8,14 @@
         <result column="name" property="name"/>
         <result column="description" property="description"/>
         <result column="max_capacity" property="maxCapacity"/>
+        <result column="remaining_capacity" property="remainingCapacity"/>
+        <result column="registered_capacity" property="registeredCapacity"/>
         <result column="publisher_name" property="publisherName"/>
         <result column="publisher_phone" property="publisherPhone"/>
         <result column="publisher_job_number" property="publisherJobNumber"/>
         <result column="publisher_grade" property="publisherGrade"/>
         <result column="publisher_class" property="publisherClass"/>
+        <result column="school_time" property="schoolTime"/>
         <result column="del_flag" property="delFlag"/>
         <result column="create_time" property="createTime"/>
     </resultMap>
@@ -36,12 +39,12 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.example.courseenroll.entity.Course">
-        INSERT INTO course (name, description, max_capacity,
+        INSERT INTO course (name, description, max_capacity,remaining_capacity,registered_capacity,
                             publisher_name, publisher_phone, publisher_job_number,
-                            publisher_grade, publisher_class)
-        VALUES (#{name}, #{description}, #{maxCapacity},
+                            publisher_grade, publisher_class,school_time)
+        VALUES (#{name}, #{description}, #{maxCapacity},#{remainingCapacity},#{registeredCapacity},
                 #{publisherName}, #{publisherPhone}, #{publisherJobNumber},
-                #{publisherGrade}, #{publisherClass})
+                #{publisherGrade}, #{publisherClass}, #{schoolTime})
     </insert>
 
     <update id="update" parameterType="com.example.courseenroll.entity.Course">
@@ -49,11 +52,14 @@
                           name = #{name},
                           description = #{description},
                           max_capacity = #{maxCapacity},
+                          remaining_capacity = #{remainingCapacity},
+                          registered_capacity = #{registeredCapacity},
                           publisher_name = #{publisherName},
                           publisher_phone = #{publisherPhone},
                           publisher_job_number = #{publisherJobNumber},
                           publisher_grade = #{publisherGrade},
-                          publisher_class = #{publisherClass}
+                          publisher_class = #{publisherClass},
+                          school_time = #{schoolTime}
         WHERE id = #{id}
     </update>
 

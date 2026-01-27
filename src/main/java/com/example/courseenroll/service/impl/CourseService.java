@@ -47,11 +47,13 @@ public class CourseService implements ICourseService {
 
     @Override
     public void create(Course course) {
+        course.setRegisteredCapacity(course.getMaxCapacity() - course.getRemainingCapacity());
         courseMapper.insert(course);
     }
 
     @Override
     public void update(Course course) {
+        course.setRegisteredCapacity(course.getMaxCapacity() - course.getRemainingCapacity());
         courseMapper.update(course);
     }
 

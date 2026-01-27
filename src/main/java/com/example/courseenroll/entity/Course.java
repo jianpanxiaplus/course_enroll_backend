@@ -13,11 +13,14 @@ public class Course implements Serializable {
     private String name;
     private String description;
     private Integer maxCapacity;
+    private Integer remainingCapacity;
+    private Integer registeredCapacity;
     private String publisherName;
     private String publisherPhone;
     private String publisherJobNumber;
     private Integer publisherGrade;
     private Integer publisherClass;
+    private String schoolTime;
     private Integer delFlag;
     private LocalDateTime createTime;
     private transient boolean enrolled;
