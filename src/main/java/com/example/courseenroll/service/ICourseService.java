@@ -1,6 +1,7 @@
 package com.example.courseenroll.service;
 
 import com.example.courseenroll.entity.Course;
+import com.example.courseenroll.req.CourseReq;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface ICourseService {
     void update(Course course);
 
     void delete(Long id);
+
+    List<Course> getAvailableCourses(CourseReq courseReq);
 }

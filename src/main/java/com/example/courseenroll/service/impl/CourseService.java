@@ -3,9 +3,12 @@ package com.example.courseenroll.service.impl;
 import com.example.courseenroll.entity.Course;
 import com.example.courseenroll.mapper.CourseMapper;
 import com.example.courseenroll.mapper.EnrollmentMapper;
+import com.example.courseenroll.req.CourseReq;
 import com.example.courseenroll.service.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -60,5 +63,10 @@ public class CourseService implements ICourseService {
     @Override
     public void delete(Long id) {
         courseMapper.deleteById(id);
+    }
+
+    @Override
+    public List<Course> getAvailableCourses(CourseReq courseReq) {
+        return courseMapper.findAvailableByFilters(courseReq);
     }
 }

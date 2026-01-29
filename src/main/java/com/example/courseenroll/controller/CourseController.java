@@ -2,6 +2,7 @@ package com.example.courseenroll.controller;
 
 import com.example.courseenroll.common.Result;
 import com.example.courseenroll.entity.Course;
+import com.example.courseenroll.req.CourseReq;
 import com.example.courseenroll.service.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,12 @@ public class CourseController {
     public Result listCourses() {
         List<Course> courseList = courseService.getAllCourses();
         return Result.success(courseList);
+    }
+
+    @PostMapping("/available")
+    public Result getAvailableCourses(@RequestBody CourseReq courseReq) {
+        List<Course> availableCourseList = courseService.getAvailableCourses(courseReq);
+        return Result.success(availableCourseList);
     }
 
     @GetMapping("/myCourses")

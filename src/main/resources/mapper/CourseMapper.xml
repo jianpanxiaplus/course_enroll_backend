@@ -38,6 +38,23 @@
         WHERE e.student_id = #{studentId}
     </select>
 
+    <select id="findAvailableByFilters" resultType="com.example.courseenroll.entity.Course">
+        SELECT * FROM course where del_flag = 0
+        <if test="courseReq.name != null and courseReq.name != ''">
+            AND name LIKE CONCAT('%', #{courseReq.name}, '%')
+        </if>
+        <if test="courseReq.schoolTime != null and courseReq.schoolTime != ''">
+            AND school_time LIKE CONCAT('%', #{courseReq.schoolTime}, '%')
+        </if>
+        <if test="courseReq.publisherGrade != null and courseReq.publisherGrade != ''">
+            AND publisher_grade = #{courseReq.publisherGrade}
+        </if>
+        <if test="courseReq.publisherClass != null and courseReq.publisherClass != ''">
+            AND publisher_class = #{courseReq.publisherClass}
+        </if>
+        ORDER BY create_time DESC
+    </select>
+
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.example.courseenroll.entity.Course">
         INSERT INTO course (name, description, max_capacity,remaining_capacity,registered_capacity,
                             publisher_name, publisher_phone, publisher_job_number,
