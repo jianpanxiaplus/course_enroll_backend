@@ -67,6 +67,12 @@ public class CourseService implements ICourseService {
 
     @Override
     public List<Course> getAvailableCourses(CourseReq courseReq) {
-        return courseMapper.findAvailableByFilters(courseReq);
+        List<Course> availableByFilters = courseMapper.findAvailableByFilters(courseReq);
+        availableByFilters.forEach(course -> {
+            Long studentId = 1L;
+            boolean exists = enrollmentMapper.exists(studentId, course.getId());
+            course.setEnrolled(exists);
+        });
+        return availableByFilters;
     }
 }
